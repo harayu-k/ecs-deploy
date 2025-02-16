@@ -36,6 +36,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           echo $ECR_REGISTRY
+          echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
@@ -47,7 +48,7 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@f87d1f66e0c6e10caeeb51f8344a0d25c899c533 # v1.6.2
         with:
-          task-definition: .github/ecs/task-definition.json
+          task-definition: .github/ecs/task_definition.json
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
 
